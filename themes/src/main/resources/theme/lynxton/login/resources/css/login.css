@@ -1,0 +1,259 @@
+/* Inherit Keycloak's forms, actions, validation and accessibility markup. */
+.login-pf body {
+  min-height: 100vh;
+  min-height: 100svh;
+  height: auto;
+  background: var(--lynxton-background);
+}
+
+.pf-v5-c-login {
+  min-height: 100vh;
+  min-height: 100svh;
+  padding: clamp(24px, 5vw, 72px);
+}
+
+.pf-v5-c-login__container {
+  width: 100%;
+  max-width: 1120px;
+  margin-inline: auto;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 480px);
+  grid-template-areas: "header main";
+  align-items: center;
+  gap: clamp(40px, 7vw, 112px);
+}
+
+.pf-v5-c-login__header {
+  min-width: 0;
+  padding: 0;
+}
+
+#kc-header-wrapper {
+  color: var(--lynxton-text) !important;
+  text-align: start;
+  text-transform: none;
+  letter-spacing: normal;
+  font-family: var(--lynxton-font);
+  font-size: 16px;
+  line-height: 1.7;
+  overflow-wrap: anywhere;
+}
+
+.lynxton-brand-logo {
+  display: block;
+  width: 222px;
+  max-width: 100%;
+  height: 73px;
+  margin-block-end: 44px;
+  background: url("../img/logo.png") no-repeat left center / contain;
+}
+
+.lynxton-brand-logo > span {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+  border: 0;
+}
+
+.lynxton-brand-title {
+  display: block;
+  margin-block-end: 22px;
+  color: var(--lynxton-text);
+  font-size: clamp(28px, 3.3vw, 42px);
+  font-weight: 600;
+  line-height: 1.45;
+  letter-spacing: -0.035em;
+}
+
+.lynxton-brand-description {
+  display: block;
+  max-width: 28em;
+  color: var(--lynxton-muted);
+  font-size: 16px;
+  line-height: 1.8;
+}
+
+.lynxton-realm {
+  display: block;
+  margin-block-start: 28px;
+  color: var(--lynxton-primary-dark);
+  font-size: 14px;
+  font-weight: 500;
+}
+
+.lynxton-realm:empty {
+  display: none;
+}
+
+.pf-v5-c-login__main {
+  min-width: 0;
+  background: var(--lynxton-surface);
+  border: 1px solid var(--lynxton-border);
+  border-radius: var(--lynxton-radius);
+  box-shadow: var(--lynxton-shadow);
+}
+
+.pf-v5-c-login__main-header {
+  border-top: 0;
+  padding: 36px 36px 24px;
+  grid-template-columns: minmax(0, 1fr);
+  gap: 16px;
+}
+
+div.pf-v5-c-login__main-header:has(.pf-v5-c-login__main-header-utilities) {
+  grid-template-columns: minmax(0, 1fr);
+}
+
+.pf-v5-c-login__main-header-utilities {
+  justify-self: start;
+  max-width: 100%;
+}
+
+.pf-v5-c-login__main-header-utilities .pf-v5-c-form-control {
+  min-width: 9rem;
+  font-size: 14px;
+}
+
+#kc-page-title {
+  color: var(--lynxton-text);
+  font-family: var(--lynxton-font);
+  font-size: 26px;
+  font-weight: 600;
+  line-height: 1.4;
+  overflow-wrap: anywhere;
+}
+
+.pf-v5-c-login__main-body {
+  padding-inline: 36px;
+  padding-block-end: 32px;
+}
+
+.pf-v5-c-form-control {
+  min-width: 0;
+  border-radius: 8px;
+  --pf-v5-c-form-control--BorderRadius: 8px;
+  --pf-v5-c-form-control--before--BorderBottomColor: var(--lynxton-border);
+  --pf-v5-c-form-control--after--BorderBottomColor: var(--lynxton-primary);
+}
+
+.pf-v5-c-form-control :is(input, select) {
+  min-height: 44px;
+  font-size: 16px;
+}
+
+.pf-v5-c-form__label {
+  color: var(--lynxton-text);
+  font-weight: 500;
+}
+
+.pf-v5-c-button {
+  --pf-v5-c-button--BorderRadius: 10px;
+  border-radius: 10px;
+}
+
+.pf-v5-c-button.pf-m-primary {
+  min-height: 46px;
+  font-weight: 600;
+  box-shadow: 0 4px 14px rgb(11 91 211 / 16%);
+}
+
+.pf-v5-c-button.pf-m-control {
+  min-height: 44px;
+  border-radius: 0 8px 8px 0;
+}
+
+.pf-v5-c-login__main-footer {
+  padding: 0;
+}
+
+.pf-v5-c-login__main-footer-band {
+  padding: 20px 0 0;
+  background: transparent;
+  border-block-start: 1px solid var(--lynxton-border);
+}
+
+.lynxton-footer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+  padding: 22px 24px;
+  border-block-start: 1px solid var(--lynxton-border);
+  color: var(--lynxton-muted);
+  font-size: 12px;
+  line-height: 1.7;
+  text-align: center;
+  overflow-wrap: anywhere;
+}
+
+.lynxton-footer a {
+  color: var(--lynxton-primary);
+  font-size: 14px;
+  font-weight: 500;
+}
+
+#kc-social-providers .pf-v5-c-button,
+#try-another-way,
+#switch-organization {
+  min-height: 44px;
+}
+
+#kc-recovery-codes-list {
+  overflow-wrap: anywhere;
+}
+
+@media (max-width: 800px) {
+  .pf-v5-c-login {
+    padding: 28px 20px;
+  }
+
+  .pf-v5-c-login__container {
+    max-width: 480px;
+    grid-template-columns: minmax(0, 1fr);
+    grid-template-areas: "header" "main";
+    gap: 24px;
+  }
+
+  #kc-header-wrapper {
+    text-align: center;
+  }
+
+  .lynxton-brand-logo {
+    width: 166px;
+    height: 54px;
+    margin: 0 auto;
+    background-position: center;
+  }
+
+  .lynxton-brand-title,
+  .lynxton-brand-description {
+    display: none;
+  }
+
+  .lynxton-realm {
+    margin-block-start: 12px;
+  }
+}
+
+@media (max-width: 400px) {
+  .pf-v5-c-login {
+    padding: 24px 12px;
+  }
+
+  .pf-v5-c-login__main-header {
+    padding: 28px 22px 20px;
+  }
+
+  .pf-v5-c-login__main-body {
+    padding-inline: 22px;
+    padding-block-end: 24px;
+  }
+
+  #kc-recovery-codes-list {
+    columns: 1;
+  }
+}

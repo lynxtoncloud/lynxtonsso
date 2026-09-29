@@ -8,5 +8,8 @@
     }, {
         "name" : "keycloak.v2",
         "types": [ "login" ]
+    }, {
+        "name" : "lynxton",
+        "types": [ "login", "account", "admin", "common" ]
     }]
 }

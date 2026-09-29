@@ -1,0 +1,146 @@
+/* LynxtonCloud console appearance. Upstream owns layout, controls, and behavior. */
+body {
+  background: var(--lynxton-background);
+  color: var(--lynxton-text);
+}
+
+.pf-v5-c-page {
+  --pf-v5-c-page--BackgroundColor: var(--lynxton-background);
+  --pf-v5-c-page__sidebar--BackgroundColor: var(--lynxton-surface);
+  --pf-v5-c-page__main-section--BackgroundColor: var(--lynxton-background);
+  --pf-v5-c-page__main-section--m-light--BackgroundColor: var(--lynxton-surface);
+}
+
+.pf-v5-c-masthead {
+  --pf-v5-c-masthead--BackgroundColor: var(--lynxton-surface);
+  --pf-v5-c-masthead--Color: var(--lynxton-text);
+  --pf-v5-global--Color--100: var(--lynxton-text);
+  --pf-v5-global--Color--200: var(--lynxton-muted);
+  --pf-v5-global--active-color--100: var(--lynxton-primary);
+  --pf-v5-global--BackgroundColor--100: var(--lynxton-surface);
+  --pf-v5-global--BackgroundColor--200: var(--lynxton-background);
+  background: var(--lynxton-surface);
+  color: var(--lynxton-text);
+  border-block-end: 1px solid var(--lynxton-border);
+}
+
+.pf-v5-c-masthead .pf-v5-c-toolbar {
+  --pf-v5-c-toolbar--BackgroundColor: transparent;
+  --pf-v5-c-toolbar--Color: var(--lynxton-text);
+}
+
+.pf-v5-c-masthead .pf-v5-c-button.pf-m-plain,
+.pf-v5-c-masthead .pf-v5-c-dropdown__toggle,
+.pf-v5-c-masthead .pf-v5-c-menu-toggle {
+  color: var(--lynxton-text);
+}
+
+.pf-v5-c-masthead__brand img {
+  width: auto;
+  height: 36px;
+  max-width: min(180px, 42vw);
+  object-fit: contain;
+}
+
+.pf-v5-c-page__sidebar {
+  background: var(--lynxton-surface);
+  border-inline-end: 1px solid var(--lynxton-border);
+}
+
+.pf-v5-c-page__sidebar .pf-v5-c-nav {
+  --pf-v5-c-nav__link--Color: var(--lynxton-text);
+  --pf-v5-c-nav__link--hover--Color: var(--lynxton-primary-dark);
+  --pf-v5-c-nav__link--focus--Color: var(--lynxton-primary-dark);
+  --pf-v5-c-nav__link--m-current--Color: var(--lynxton-primary-dark);
+  --pf-v5-c-nav__link--hover--BackgroundColor: var(--lynxton-background);
+  --pf-v5-c-nav__link--focus--BackgroundColor: var(--lynxton-background);
+  --pf-v5-c-nav__link--m-current--BackgroundColor: #e7f0ff;
+  --pf-v5-c-nav__link--m-current--after--BorderColor: var(--lynxton-primary);
+  --pf-v5-c-nav__section-title--Color: var(--lynxton-muted);
+  --pf-v5-c-nav__section-title--BorderBottomColor: var(--lynxton-border);
+  --pf-v5-c-nav__link--after--BorderColor: var(--lynxton-border);
+}
+
+.pf-v5-c-page__sidebar .pf-v5-c-nav__link {
+  border-radius: 0;
+}
+
+.pf-v5-c-page__sidebar .pf-v5-c-nav__link.pf-m-current {
+  font-weight: 600;
+}
+
+.pf-v5-c-card {
+  --pf-v5-c-card--BorderRadius: 12px;
+  --pf-v5-c-card--BoxShadow: 0 2px 10px rgb(6 58 140 / 5%);
+  border: 1px solid var(--lynxton-border);
+}
+
+.pf-v5-c-button {
+  --pf-v5-c-button--BorderRadius: 10px;
+}
+
+.pf-v5-c-page__main-section > .pf-v5-c-title,
+.pf-v5-c-page__main-section .pf-v5-c-content > h1 {
+  color: var(--lynxton-text);
+  letter-spacing: -0.02em;
+}
+
+.pf-v5-c-tabs {
+  --pf-v5-c-tabs__link--m-current--Color: var(--lynxton-primary-dark);
+  --pf-v5-c-tabs__link--after--BorderColor: var(--lynxton-primary);
+}
+
+.keycloak__dashboard_icon {
+  width: 200px;
+  max-width: 100%;
+  height: auto;
+}
+
+.keycloak__loading-container {
+  color: var(--lynxton-text);
+  background: var(--lynxton-background);
+}
+
+:is(a, button, input, select, textarea, [tabindex]):focus-visible {
+  outline: 3px solid var(--lynxton-primary);
+  outline-offset: 3px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .pf-v5-c-page__sidebar {
+    --pf-v5-c-page__sidebar--Transition: none;
+    transition: none;
+  }
+}
+
+/* Keep the complete account menu reachable on narrow screens. */
+@media (max-width: 575px) {
+  .pf-v5-c-masthead {
+    display: grid;
+    grid-template-columns: auto minmax(0, 1fr);
+    column-gap: 12px;
+    padding-inline: 16px;
+  }
+
+  .pf-v5-c-masthead__toggle {
+    grid-column: 1;
+    grid-row: 1;
+  }
+
+  .pf-v5-c-masthead__main {
+    grid-column: 2;
+    grid-row: 1;
+    min-width: 0;
+  }
+
+  .pf-v5-c-masthead__content {
+    grid-column: 1 / -1;
+    grid-row: 2;
+    min-width: 0;
+    margin-inline: 0;
+  }
+
+  .pf-v5-c-masthead__brand img {
+    max-width: 156px;
+  }
+}

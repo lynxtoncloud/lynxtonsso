@@ -1,0 +1,52 @@
+/* LynxtonCloud website palette. See branding/README.md for asset provenance. */
+:root {
+  --lynxton-background: #f4f7fb;
+  --lynxton-surface: #fff;
+  --lynxton-text: #1a2332;
+  --lynxton-muted: #5c6b7f;
+  --lynxton-primary: #0b5bd3;
+  --lynxton-primary-dark: #063a8c;
+  --lynxton-accent: #00a3c4;
+  --lynxton-border: #d7e1ef;
+  --lynxton-radius: 12px;
+  --lynxton-shadow: 0 12px 40px rgb(15 35 65 / 8%);
+  --lynxton-font: "Noto Sans SC", "PingFang SC", "Microsoft YaHei", sans-serif;
+
+  --pf-v5-global--FontFamily--text: var(--lynxton-font);
+  --pf-v5-global--FontFamily--heading: var(--lynxton-font);
+  --pf-v5-global--Color--100: var(--lynxton-text);
+  --pf-v5-global--Color--200: var(--lynxton-muted);
+  --pf-v5-global--BackgroundColor--100: var(--lynxton-surface);
+  --pf-v5-global--BackgroundColor--200: var(--lynxton-background);
+  --pf-v5-global--BorderColor--100: var(--lynxton-border);
+  --pf-v5-global--primary-color--100: var(--lynxton-primary);
+  --pf-v5-global--primary-color--200: var(--lynxton-primary-dark);
+  --pf-v5-global--link--Color: var(--lynxton-primary);
+  --pf-v5-global--link--Color--hover: var(--lynxton-primary-dark);
+  --pf-v5-global--active-color--100: var(--lynxton-primary);
+}
+
+body {
+  font-family: var(--lynxton-font);
+  color: var(--lynxton-text);
+}
+
+.pf-v5-c-button.pf-m-primary {
+  --pf-v5-c-button--m-primary--BackgroundColor: var(--lynxton-primary);
+  --pf-v5-c-button--m-primary--hover--BackgroundColor: var(--lynxton-primary-dark);
+  --pf-v5-c-button--m-primary--focus--BackgroundColor: var(--lynxton-primary-dark);
+  --pf-v5-c-button--m-primary--active--BackgroundColor: var(--lynxton-primary-dark);
+}
+
+:where(a, button, input, select, textarea):focus-visible {
+  outline: 3px solid var(--lynxton-primary);
+  outline-offset: 3px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    scroll-behavior: auto !important;
+  }
+}
