@@ -7,7 +7,7 @@
 - 官方上游：`https://github.com/keycloak/keycloak.git`，本地 remote 为 `upstream`，禁止向其推送。
 - 公司仓库：`https://github.com/lynxtoncloud/lynxtonsso.git`，remote 为 `origin`。
 - `main` 只接受官方 `upstream/main` 的快进同步，不合入品牌提交。
-- 定制分支：`codex/lynxton-sso-branding`。
+- 定制分支：`v1.0.0`。
 - 本次起点：`b035515009`（完整提交以 Git 为准）；源码版本为 `999.0.0-SNAPSHOT`，不是正式发布版本。
 
 同步时先提交或妥善保存当前改动，然后执行：
@@ -17,7 +17,7 @@ git fetch upstream main
 git switch main
 git merge --ff-only upstream/main
 git push origin main
-git switch codex/lynxton-sso-branding
+git switch v1.0.0
 git merge main
 ```
 
