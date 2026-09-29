@@ -1,0 +1,44 @@
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: lynxtonsso
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: lynxtonsso
+  namespace: lynxtonsso
+spec:
+  type: ExternalName
+  externalName: host.docker.internal
+  ports:
+    - name: http
+      port: 58080
+      targetPort: 58080
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: lynxtonsso
+  namespace: lynxtonsso
+  annotations:
+    nginx.ingress.kubernetes.io/backend-protocol: HTTP
+    nginx.ingress.kubernetes.io/proxy-buffer-size: 16k
+    nginx.ingress.kubernetes.io/ssl-redirect: "true"
+spec:
+  ingressClassName: nginx
+  tls:
+    - hosts:
+        - login.lynxtoncloud.com
+      secretName: lynxtonsso-local-tls
+  rules:
+    - host: login.lynxtoncloud.com
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: lynxtonsso
+                port:
+                  number: 58080

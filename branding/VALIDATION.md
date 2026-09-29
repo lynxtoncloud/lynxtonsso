@@ -42,3 +42,12 @@ Keycloak 26.3.2 额外检查了中文登录、错误、注册与管理主题；�
 - 清理：原 `lynxstudio-dev-keycloak-1` 容器、19892 临时测试容器与数据库卷已移除；19891 原生 Java 预览已停止。旧身份数据只保留为离线备份与未挂载的原卷。
 
 迁移不延续已有浏览器登录会话，需重新登录。完整源码前端构建、其他业务站点接入及飞书联邦不在此环境验证结果内。
+
+## 管理员登录页残留 Logo 与域名准备（2026-09-29）
+
+- 已复现用户浏览器中的双 Logo：master 遗留 `displayNameHtml` 包含 `kc-logo-text`，被登录主题的 Realm 名称区域再次渲染。图片文件和 favicon 本身已是公司资源，问题来自运行数据。
+- 已清空实际 master 的该字段，`start.py` 持续归一化为纯文本回退；实际内置浏览器刷新后的管理员登录页仅显示灵通云品牌。
+- 新增 `branding/check-login.py`，覆盖 master 与普通用户登录页；真实页面、Logo/favicon 字节匹配均通过，原始嵌套 Logo 样例能触发失败。
+- `https://login.lynxtoncloud.com` 的本机 TLS 证书、Docker Desktop 独立 Namespace、Ingress 和后端转发已部署，使用现有 CA 校验且指定本机解析时返回 HTTP 200。
+- **域名切换待完成**：本机 hosts 尚未加入该域名，当前运行中的 SSO issuer 仍为 localhost。启动脚本会在本地域名未正确解析时退出，不重建服务。消费者与身份绑定迁移脚本已准备并通过静态检查，数据库、消费者 Secret 与 Deployment 尚未切换。
+- 不修改公网 DNS，也未部署公网证书。待本机管理员完成 hosts 后，再原子协调 SSO hostname、平台身份绑定和消费者 TLS/issuer 的切换。

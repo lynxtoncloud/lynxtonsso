@@ -77,4 +77,6 @@ python3 branding/build-theme.py --output /tmp/lynxton-theme.jar
 
 发布前验证真实 Keycloak 的中文/英文登录、注册、表单错误、找回密码、OTP/Passkey、退出确认、账户中心及管理控制台；检查 Logo 和 favicon 返回成功、键盘焦点、320px 与桌面布局、长错误提示及操作栏。登录认证能力的开关仍由 Realm 配置决定，未配置能力不能用静态界面替代。
 
+管理员登录页也必须单独验证：master 初始化可能遗留含上游 Logo 的 `displayNameHtml`。本地启动入口将它清空以回退到纯文本显示名；`python3 branding/check-login.py --base-url <入口地址>` 会检查实际登录 HTML 和品牌资源。
+
 每次更新上游都需复查继承主题、资源解析、PatternFly 变量和三类页面；不以单纯 JAR 打包成功替代浏览器及认证流程验证。

@@ -39,7 +39,8 @@ services:
       KC_BOOTSTRAP_ADMIN_PASSWORD: ${SSO_ADMIN_PASSWORD:?Run python3 branding/docker/start.py first}
       KC_HEALTH_ENABLED: "true"
       KC_HTTP_HOST: 0.0.0.0
-      KC_HOSTNAME: http://localhost:${SSO_PORT:-58080}
+      KC_HOSTNAME: ${SSO_PUBLIC_URL:-https://login.lynxtoncloud.com}
+      KC_PROXY_HEADERS: xforwarded
       LYNXTON_TEST_PASSWORD: ${SSO_TEST_PASSWORD:?Run python3 branding/docker/start.py first}
     ports:
       - "127.0.0.1:${SSO_PORT:-58080}:8080"

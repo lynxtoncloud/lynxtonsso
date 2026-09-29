@@ -1,6 +1,19 @@
 # 本地 Docker 测试环境
 
-在仓库根目录运行（Python 3.9+、Docker Desktop / Docker Engine 和 Compose）：
+在仓库根目录运行。当前本机使用 Python 3.9+、Docker Desktop 的 Compose 与 Kubernetes、nginx Ingress，以及已经信任的本地开发 CA。公网 DNS 和公网证书不在这个本地脚本中操作。
+
+首次配置域名时：
+
+```sh
+# 由本机管理员执行一次；已存在相同记录时不重复添加
+echo '127.0.0.1 login.lynxtoncloud.com' | sudo tee -a /etc/hosts
+# 用现有本地 CA 签发 login 域名证书并配置 Docker Desktop Ingress
+python3 branding/docker/configure-domain.py
+```
+
+默认复用相邻 LynxPilot 仓库的本地 CA，可通过 `--ca-cert` 和 `--ca-key` 指定已有 CA 文件。私钥只存放在被忽略的 `.local/tls/` 与本地 TLS Secret，不进入 Git。Ingress 使用独立 `lynxtonsso` Namespace，经 `host.docker.internal:58080` 转发到 Docker 服务。
+
+启动或更新镜像：
 
 ```sh
 python3 branding/docker/start.py
@@ -8,9 +21,9 @@ python3 branding/docker/start.py
 
 脚本构建当前工作树的主题 JAR 并打入 `lynxtonsso:v1.0.0` 镜像，生成随机测试密码，启动独立 PostgreSQL 与 Keycloak，等待健康检查后将管理域也设为灵通云主题。重复执行保留账号与数据库，并重建 Keycloak 容器加载新镜像。
 
-- 账户中心：http://localhost:58080/realms/lynxton-preview/account/
-- 管理控制台：http://localhost:58080/admin/master/console/
-- OIDC 发现：http://localhost:58080/realms/lynxton-preview/.well-known/openid-configuration
+- 账户中心：https://login.lynxtoncloud.com/realms/lynxton-preview/account/
+- 管理控制台：https://login.lynxtoncloud.com/admin/master/console/
+- OIDC 发现：https://login.lynxtoncloud.com/realms/lynxton-preview/.well-known/openid-configuration
 - 管理员：`admin`；密码为本目录 `.env` 的 `SSO_ADMIN_PASSWORD`。
 - 普通测试用户：`test-user`；密码为 `.env` 的 `SSO_TEST_PASSWORD`。
 
@@ -39,7 +52,7 @@ python3 branding/docker/start.py
 
 `v1.0.0` 是公司的定制分支名。此环境使用该分支主题 JAR 和官方二进制，不是当前 `main` / `999.0.0-SNAPSHOT` 源码的完整构建；管理首页 Logo 替代文字的 JSX 修改仍需完整前端构建。
 
-此环境供本机主题、注册、登录、账户中心和管理控制台验证，使用 `start-dev`。此脚本不会自动创建其他业务站点 Client、员工/外部用户双身份域、飞书、SMTP 或生产 HTTPS；本机迁移后继续以 `http://localhost:58080/realms/lynxstudio` 为已有 LynxStudio 提供身份服务，其他业务站点仍需配置 Client。测试用户为合成用户，邮箱为保留的 `.test` 地址，找回密码未启用。不要作为生产部署配置使用。
+此环境供本机主题、注册、登录、账户中心和管理控制台验证，使用 `start-dev`。公开入口由 `SSO_PUBLIC_URL` 控制，默认 `https://login.lynxtoncloud.com`；58080 为本机后端端口。启动前会确认该测试域名指向回环地址。此脚本不会自动创建其他业务站点 Client、员工/外部用户双身份域、飞书、SMTP 或生产 HTTPS；已有 LynxStudio 从旧 `http://localhost:58080/realms/lynxstudio` 切到 `https://login.lynxtoncloud.com/realms/lynxstudio` 时，必须同时迁移平台的 issuer/subject 绑定、更新消费者的 TLS 信任与 issuer，再恢复登录；不能只改 SSO hostname。对应本机操作见 LynxPilot 的 `docs/03-交付/05-本地Kubernetes验收.md`。其他业务站点仍需配置 Client。测试用户为合成用户，邮箱为保留的 `.test` 地址，找回密码未启用。不要作为生产部署配置使用。
 
 ## 从旧本地 Keycloak 迁移
 
@@ -50,3 +63,12 @@ python3 branding/docker/start.py
 新机器只运行 `start.py` 会创建全新 `lynxton-preview` 测试 Realm，不会凭空获得已迁移的本机账号或业务 Client。旧 Realm 通过一次性离线导入迁入数据库，日常容器仅挂载 `.local/import/` 中的合成测试 Realm。迁移文件不会在正常启动时加载，日常变更应通过管理控制台进行。
 
 迁移跨数据库后，原浏览器会话需要重新登录；已有账号、客户端和用户 ID 保留。
+
+## 登录品牌回归检查
+
+```sh
+python3 branding/check-login.py --base-url https://login.lynxtoncloud.com \
+  --ca-file ../LynxPilot/.local/k8s/generated/local-ca.crt
+```
+
+同时检查 master 管理登录页与普通用户登录页，包含 Logo/favicon 真实内容和遗留 `kc-logo-text` 标识。启动脚本清空 master 的旧 `displayNameHtml`，让主题使用纯文本 `displayName`，避免上游安装时留下的 Keycloak Logo 被再次嵌入品牌区。
