@@ -30,3 +30,15 @@
 注册与找回密码仅验证页面和控件，未触发邮件投递；OTP 验证设置页面，未登记真实设备。本次不涉及飞书联邦、双身份域、生产部署或完整 Keycloak 发行构建。管理首页 Logo 替代文字的一行 JSX 修改已静态核对，须随源码前端构建发布；独立主题包不替换上游 JavaScript。
 
 Keycloak 26.3.2 额外检查了中文登录、错误、注册与管理主题；生成的 `zh_CN` 兼容语言文件使其能读取同一份中文文案，不据此声明所有旧版本兼容。
+
+## Docker 本地替换验证（2026-09-29）
+
+- 镜像：`lynxtonsso:v1.0.0`，基于官方 Keycloak `26.3.2`，内置本分支主题 JAR；不包含完整主线源码构建。
+- 运行：独立 Compose 项目 `lynxtonsso`，Keycloak 与 PostgreSQL 均 healthy，HTTP 仅发布 `127.0.0.1:58080`；数据库端口不发布。
+- 迁移：旧 H2 数据先停机备份，然后离线导出并导入新 PostgreSQL。`master` / `lynxstudio` Realm ID、全部 4 个用户 ID、15 个客户端 ID 与 8 个签名提供者 ID 核对一致。旧 OIDC issuer `http://localhost:58080/realms/lynxstudio` 不变。
+- 实际浏览器：普通测试用户登录账户中心、管理员登录控制台、错误密码拒绝、旧业务 Realm 的灵通云登录页均通过；桌面和 320px 无横向溢出；Logo/favicon 返回 200，SHA256 与源码一致；无页面脚本或资源错误。
+- 网络：宿主浏览器与 Docker 容器经 `host.docker.internal:58080` 读取原 Realm 的 OIDC discovery 均通过。
+- 启动：已验证新建容器和保留数据库后更换镜像。LynxStudio 启动脚本已改用独立入口，其 Bash/Python 语法与本地配置静态检查通过；未运行会覆盖已有用户的 Realm 对账。
+- 清理：原 `lynxstudio-dev-keycloak-1` 容器、19892 临时测试容器与数据库卷已移除；19891 原生 Java 预览已停止。旧身份数据只保留为离线备份与未挂载的原卷。
+
+迁移不延续已有浏览器登录会话，需重新登录。完整源码前端构建、其他业务站点接入及飞书联邦不在此环境验证结果内。

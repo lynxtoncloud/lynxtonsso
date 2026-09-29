@@ -69,6 +69,10 @@ python3 branding/build-theme.py --output /tmp/lynxton-theme.jar
 
 开发时也可以将整个 `lynxton` 目录只读挂载到 `/opt/keycloak/themes/lynxton`，使用 `--spi-theme--static-max-age=-1 --spi-theme--cache-themes=false --spi-theme--cache-templates=false` 禁用主题缓存。只绑定本机测试端口，勿将开发服务和测试账号用于生产。
 
+## 本地 Docker 测试
+
+运行 `python3 branding/docker/start.py` 可启动独立的本机测试环境，包含 PostgreSQL、测试 Realm 和当前主题。地址、测试账号与日常操作见 [Docker 测试说明](docker/README.md)。
+
 ## 验证范围
 
 发布前验证真实 Keycloak 的中文/英文登录、注册、表单错误、找回密码、OTP/Passkey、退出确认、账户中心及管理控制台；检查 Logo 和 favicon 返回成功、键盘焦点、320px 与桌面布局、长错误提示及操作栏。登录认证能力的开关仍由 Realm 配置决定，未配置能力不能用静态界面替代。

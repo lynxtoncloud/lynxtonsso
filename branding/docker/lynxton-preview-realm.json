@@ -1,0 +1,42 @@
+{
+  "realm": "lynxton-preview",
+  "displayName": "灵通云 · 本地测试",
+  "enabled": true,
+  "sslRequired": "external",
+  "loginTheme": "lynxton",
+  "accountTheme": "lynxton",
+  "adminTheme": "lynxton",
+  "internationalizationEnabled": true,
+  "supportedLocales": [
+    "en",
+    "zh-CN"
+  ],
+  "defaultLocale": "zh-CN",
+  "registrationAllowed": true,
+  "resetPasswordAllowed": false,
+  "rememberMe": true,
+  "users": [
+    {
+      "username": "test-user",
+      "enabled": true,
+      "email": "test-user@example.test",
+      "emailVerified": true,
+      "firstName": "测试",
+      "lastName": "用户",
+      "requiredActions": [],
+      "credentials": [
+        {
+          "type": "password",
+          "value": "${LYNXTON_TEST_PASSWORD}",
+          "temporary": false
+        }
+      ],
+      "clientRoles": {
+        "account": [
+          "manage-account",
+          "view-profile"
+        ]
+      }
+    }
+  ]
+}
